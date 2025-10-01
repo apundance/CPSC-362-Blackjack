@@ -12,6 +12,14 @@ def DealCard(Turn):
     Turn.append(card)     
     Deck.remove(card)
 
+# Shuffle function
+#just for future proofing if we decide to do more specific cards like 2 of Aces - can create the cards here
+def cardShuffle():
+    DeckSize = 4
+    shuffledDeck = Deck * DeckSize
+    random.shuffle(shuffledDeck)
+    return shuffledDeck
+
 # Calculate total of each hand
 def Total(Turn):
     Aces = 0
