@@ -4,6 +4,7 @@ playerHand = []
 dealerHand = []
 # Main game loop
 for _ in range(2):
+    CardFunctions.cardShuffle()
     CardFunctions.DealCard(playerHand)
     CardFunctions.DealCard(dealerHand)
 

@@ -1,17 +1,17 @@
 # CPSC-362-Blackjack
 Our blackjack project we're creating for CPSC 362
  
-# Project Review 9/17/25
+# Project Review 9/30/25
 Goals
-- Create Deck of cards
-- Create how to deal cards randomly
+- Implement main game loop
 
 # Contribution
 Tristan 
 * Deck of cards Code  
 
 Enoch
-* README  
+* README
+* Shuffle code
 
 Marvin
 * README
