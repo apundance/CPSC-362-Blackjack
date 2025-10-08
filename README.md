@@ -1,17 +1,49 @@
 # CPSC-362-Blackjack
-Our blackjack project we're creating for CPSC 362
- 
-# Project Review 9/30/25
-Goals
-- Implement main game loop
+our blackjack project we're creating for cpsc 362
 
-# Contribution
-Tristan 
-* Deck of cards Code  
+---
 
-Enoch
-* README
-* Shuffle code
+## project review (10/7/25)
+**goals**
+- implement main game loop  
+- betting / money system  
+- printing results  
+- uml diagrams  
 
-Marvin
-* README
+---
+
+## current tasks
+- main game loop (asking the player if they want to hit)  
+- betting / money system  
+- printing the results  
+- uml diagrams  
+
+---
+
+## contributions
+
+**Tristan**
+- deck of cards  
+- initial state of the game  
+- deal two cards to dealer and player  
+- use case diagram  
+- activity diagram  
+
+**Marvin**
+- use case diagram  
+- activity diagram  
+- readme  
+
+**Enoch**
+- shuffling the deck of cards  
+- calculating the player’s total and the dealer’s total  
+- use case diagram  
+- activity diagram  
+- readme  
+
+---
+## Examples Screenshots
+
+![Game_Screenshot](Game_Screenshot/example1_SS.png)
+![Game_Screenshot](Game_Screenshot/example2_SS.png)
+![Game_Screenshot](Game_Screenshot/example3_SS.png)
