@@ -48,7 +48,7 @@ our blackjack project we're creating for cpsc 362
 </p>
 
 <p align="center">
-  <img src="Game_Screenshot/example1_SS.png" alt="initial deal - card distribution" width="300"/>
-  <img src="Game_Screenshot/example2_SS.png" alt="initial deal - player hits" width="300"/>
-  <img src="Game_Screenshot/example3_SS.png" alt="initial deal - dealer's turn" width="300"/>
+  <img src="Game_Screenshot/example1_SS.png" alt="initial deal - card distribution" width="310"/>
+  <img src="Game_Screenshot/example2_SS.png" alt="initial deal - player hits" width="310"/>
+  <img src="Game_Screenshot/example3_SS.png" alt="initial deal - dealer's turn" width="310"/>
 </p>
