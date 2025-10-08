@@ -48,7 +48,7 @@ def starting_hands():
         DealCard(playerHand)
         DealCard(dealerHand)
     print(f"Dealer has {revealDealerHand()} and X")
-    print(f"You have {playerHand} with total of {Total(playerHand)}")
+    print(f"You have {playerHand} with total of {Total(playerHand)}\n")
 
 # Reveal Dealer hand
 def revealDealerHand():

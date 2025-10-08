@@ -44,11 +44,12 @@ CardFunctions.cardShuffle()
 # Initalize start of game
 CardFunctions.starting_hands()
 
-
-
+playerTurn = True
+DealerTurn = False
 totalPlayer = CardFunctions.Total(Player)
 totalDealer = CardFunctions.Total(Dealer)
 
-print(f"\nPlayers and Dealers starting hands and totals\n")
-print(f"Player Hand = {Player} player total is: {totalPlayer}\nDealer Hand = {Dealer}, dealer total is: {totalDealer}\n" )
+print(f"Dealer Hand = {Dealer}, dealer total is: {totalDealer}" )
+print(f"Player Hand = {Player} player total is: {totalPlayer}")
+
 
