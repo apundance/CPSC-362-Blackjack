@@ -42,14 +42,22 @@ def Total(Turn):
 
     return total
 
-# Check for winner 
+
+def starting_hands():
+    for _ in range(2):
+        DealCard(playerHand)
+        DealCard(dealerHand)
+    print(f"Dealer has {revealDealerHand()} and X")
+    print(f"You have {playerHand} with total of {Total(playerHand)}")
+
+# Reveal Dealer hand
 def revealDealerHand():
     if len(dealerHand) == 2:
         return dealerHand[0]
     else: 
         return dealerHand  
     
-# Check whoever is closer to 21
+#  Check whoever is closer to 21
 def DealerWins():
     if 21 - Total(dealerHand) < 21 - Total(playerHand):
         return True
