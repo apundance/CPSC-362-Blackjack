@@ -43,11 +43,12 @@ our blackjack project we're creating for cpsc 362
 
 ---
 ## Examples Screenshots
-<p align= "center">
-Inital Deal Examples
+<p align="center">
+  <strong>Initial Deal Examples</strong>
+</p>
 
 <p align="center">
-  <img src="Game_Screenshot/example1_SS.png" alt="initial deal" width="350"/>
-  <img src="Game_Screenshot/example2_SS.png" alt="initial deal" width="350"/>
-  <img src="Game_Screenshot/example3_SS.png" alt="initial deal" width="350"/>
+  <img src="Game_Screenshot/example1_SS.png" alt="initial deal - card distribution" width="300"/>
+  <img src="Game_Screenshot/example2_SS.png" alt="initial deal - player hits" width="300"/>
+  <img src="Game_Screenshot/example3_SS.png" alt="initial deal - dealer's turn" width="300"/>
 </p>
