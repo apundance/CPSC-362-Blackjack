@@ -1,4 +1,5 @@
 import CardFunctions
+
 # MENU 
 def start_menu():
     print("==============================")
@@ -35,6 +36,7 @@ while(True):
 # Main game loop
 
 # Set player and dealer 
+GameDeck = []
 Player = CardFunctions.playerHand
 Dealer = CardFunctions.dealerHand
 
@@ -43,6 +45,7 @@ CardFunctions.cardShuffle()
 
 # Initalize start of game
 CardFunctions.starting_hands()
+
 
 playerTurn = True
 DealerTurn = False

@@ -1,8 +1,8 @@
 import random
 
 # Deck of cards
-
-Deck = [2, 3, 4, 5, 6, 7, 8, 9, 'J', 'Q', 'K', 'A']
+Deck = [2, 3, 4, 5, 6, 7, 8, 9, 'J', 'Q', 'K', 'A'] # Game deck
+originalDeck = [2, 3, 4, 5, 6, 7, 8, 9, 'J', 'Q', 'K', 'A'] #Unaltered deck
 playerHand = []
 dealerHand = []
 
@@ -15,10 +15,11 @@ def DealCard(Turn):
 # Shuffle function
 #just for future proofing if we decide to do more specific cards like 2 of Aces - can create the cards here
 def cardShuffle():
+    global Deck
     DeckSize = 4
-    shuffledDeck = Deck * DeckSize
-    random.shuffle(shuffledDeck)
-    return shuffledDeck
+    Deck = originalDeck * DeckSize
+    random.shuffle(Deck)
+    return print("Shuffling...")
 
 # Calculate total of each hand
 def Total(Turn):
