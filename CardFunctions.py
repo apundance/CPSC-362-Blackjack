@@ -8,6 +8,9 @@ dealerHand = []
 
 # Deal hands
 def DealCard(Turn):
+    if not Deck:
+        print("Deack is empty! Reshuffling...")
+        cardShuffle()
     card = random.choice(Deck)
     Turn.append(card)     
     Deck.remove(card)
