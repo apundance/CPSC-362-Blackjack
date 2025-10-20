@@ -31,11 +31,10 @@ while True:
     else:
         print("Invalid choice, please try again.\n")
 
-
-
 # Main game loop
 
 CardFunctions.cardShuffle() 
+
 # Set player and dealer 
 GameDeck = CardFunctions.Deck
 Player = CardFunctions.playerHand
@@ -48,20 +47,23 @@ while True:
         CardFunctions.cardShuffle() 
         GameDeck = CardFunctions.Deck
     
-
     # Initalize start of game
     print("==============================")
     CardFunctions.starting_hands()
-
-
     playerTurn = True
     DealerTurn = False
     totalPlayer = CardFunctions.Total(Player)
     totalDealer = CardFunctions.Total(Dealer)
 
+    # Print options for player and show result EX: hit, stay, bet,  
+
+
+
     print(f"Dealer Hand = {Dealer}, dealer total is: {totalDealer}" )
     print(f"Player Hand = {Player} player total is: {totalPlayer}")
 
+
+    # Ask player if they would like to play again
     playAgain = input("Would you like to continue ? (Y/y = yes, N/n = no) ==> ").lower()
     if playAgain != "y":
         print("Thank you for playing!")
