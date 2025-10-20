@@ -44,6 +44,7 @@ while True:
  
     # Shuffle when deck is close to empty
     if len(GameDeck) < 10:
+        print("Deck is running low on cards!")
         CardFunctions.cardShuffle() 
         GameDeck = CardFunctions.Deck
     
