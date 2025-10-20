@@ -66,9 +66,15 @@ def revealDealerHand():
     else: 
         return dealerHand  
     
-#  Check whoever is closer to 21
+# Check whoever is closer to 21
 def DealerWins():
-    if 21 - Total(dealerHand) < 21 - Total(playerHand):
+    player_total = Total(playerHand)
+    dealer_total = Total(dealerHand)
+
+    if player_total > 21:
+        return True  # player busts
+    if dealer_total > 21:
+        return False  # dealer busts
+    if dealer_total >= player_total:
         return True
-    else: 
-        return False
+    return False
