@@ -9,7 +9,7 @@ dealerHand = []
 # Deal hands
 def DealCard(Turn):
     if not Deck:
-        print("Deack is empty! Reshuffling...")
+        print("Deck is empty! Reshuffling...")
         cardShuffle()
     card = random.choice(Deck)
     Turn.append(card)     
@@ -23,6 +23,11 @@ def cardShuffle():
     Deck = originalDeck * DeckSize
     random.shuffle(Deck)
     return print("Shuffling...")
+
+# Clear hands to start again
+def playAgain():
+    playerHand.clear()
+    dealerHand.clear()
 
 # Calculate total of each hand
 def Total(Turn):

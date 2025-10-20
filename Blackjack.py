@@ -17,7 +17,7 @@ def show_rules():
 
 # Start Menu
 print( "==== Welcome to Blackjack ====")
-while(True):
+while True:
     start_menu()
     decide = input("Select an option (1-3): ") 
     if decide == '1':
@@ -35,24 +35,39 @@ while(True):
 
 # Main game loop
 
+CardFunctions.cardShuffle() 
 # Set player and dealer 
-GameDeck = []
+GameDeck = CardFunctions.Deck
 Player = CardFunctions.playerHand
 Dealer = CardFunctions.dealerHand
 
-# Shuffle at start of game
-CardFunctions.cardShuffle() 
+while True:
+ 
+    # Shuffle when deck is close to empty
+    if len(GameDeck) < 10:
+        CardFunctions.cardShuffle() 
+        GameDeck = CardFunctions.Deck
+    
 
-# Initalize start of game
-CardFunctions.starting_hands()
+    # Initalize start of game
+    print("==============================")
+    CardFunctions.starting_hands()
 
 
-playerTurn = True
-DealerTurn = False
-totalPlayer = CardFunctions.Total(Player)
-totalDealer = CardFunctions.Total(Dealer)
+    playerTurn = True
+    DealerTurn = False
+    totalPlayer = CardFunctions.Total(Player)
+    totalDealer = CardFunctions.Total(Dealer)
 
-print(f"Dealer Hand = {Dealer}, dealer total is: {totalDealer}" )
-print(f"Player Hand = {Player} player total is: {totalPlayer}")
+    print(f"Dealer Hand = {Dealer}, dealer total is: {totalDealer}" )
+    print(f"Player Hand = {Player} player total is: {totalPlayer}")
 
+    playAgain = input("Would you like to continue ? (Y/y = yes, N/n = no) ==> ").lower()
+    if playAgain != "y":
+        print("Thank you for playing!")
+        print("==============================")
+        break
+    CardFunctions.playAgain()
+
+    
 
