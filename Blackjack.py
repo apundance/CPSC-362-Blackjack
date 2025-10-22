@@ -21,7 +21,7 @@ while True:
     start_menu()
     decide = input("Select an option (1-3): ") 
     if decide == '1':
-        print("Starting game...\n")
+        print("Starting game...")
         break
     elif decide == "2":
             show_rules()
@@ -63,6 +63,12 @@ while True:
     print(f"Dealer Hand = {Dealer}, dealer total is: {totalDealer}" )
     print(f"Player Hand = {Player} player total is: {totalPlayer}")
 
+    # Check for winner
+    print("Check For winner")
+    if CardFunctions.DealerWins():
+        print(f"Dealer wins!\nThe dealer has {totalDealer}, player total has {totalPlayer}" )
+    else:
+        print(f"You win!\nThe dealer has {totalDealer}, player total has {totalPlayer}" )
 
     # Ask player if they would like to play again
     playAgain = input("Would you like to continue ? (Y/y = yes, N/n = no) ==> ").lower()

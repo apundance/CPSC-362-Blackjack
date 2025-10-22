@@ -16,7 +16,6 @@ def DealCard(Turn):
     Deck.remove(card)
 
 # Shuffle function
-# Just for future proofing if we decide to do more specific cards like 2 of Aces - can create the cards here
 def cardShuffle():
     global Deck
     DeckSize = 4
