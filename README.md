@@ -46,4 +46,19 @@ This project recreates the classic casino card game with a graphical interface a
    Navigating to the rules screen shows a list of rules and a back button.  
    Start game will have a back button positioned in the top-left corner.
 
-5. close the window or press X to exit.
+5. close the window or press X to exit.  
+
+## 🖼️ screenshots
+
+**Start Menu:**  
+![Start Menu](Game_Screenshot/menu.png)
+
+**Rules Screen:**  
+![Rules Screen](Game_Screenshot/rules.png)
+
+**Loading Screen:** 
+![Rules Screen](Game_Screenshot/loading.png)
+
+
+**Gameplay State:**  
+![Gameplay Screen](Game_Screenshot/playstate.png)
