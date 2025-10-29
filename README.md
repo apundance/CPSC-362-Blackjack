@@ -1,54 +1,31 @@
-# CPSC-362-Blackjack
-our blackjack project we're creating for cpsc 362
+# 🃏 Blackjack (Pygame Edition)
+
+A simple blackjack game built in **python** using the **pygame** library.  
+this project recreates the classic casino card game with a graphical interface and serves as a foundation for future gameplay development.
 
 ---
 
-## project review (10/7/25)
-**goals**
-- implement main game loop  
-- betting / money system  
-- printing results  
-- uml diagrams  
+## 🎮 overview
+
+the current version features a **basic start menu** with a green background, a gold title, and a clickable start button.  
+future updates will introduce card visuals, player interaction (hit / stand), betting, and dealer logic.
 
 ---
 
-## current tasks
-- main game loop (asking the player if they want to hit)  
-- betting / money system  
-- printing the results  
-- uml diagrams  
+## 🧩 planned features
+
+- full blackjack gameplay (player vs dealer)  
+- betting and balance system  
+- card animations and sound effects  
+- visual score display  
+- win / lose result screen  
 
 ---
 
-## contributions
+## 🖥️ setup & installation
 
-**Tristan**
-- deck of cards  
-- initial state of the game  
-- deal two cards to dealer and player  
-- use case diagram  
-- activity diagram  
-
-**Marvin**
-- use case diagram  
-- activity diagram  
-- readme  
-
-**Enoch**
-- shuffling the deck of cards  
-- calculating the player’s total and the dealer’s total  
-- use case diagram  
-- activity diagram  
-- readme  
-
----
-## Examples Screenshots
-<p align="center">
-  <strong>Initial Deal Examples</strong>
-</p>
-
-<p align="center">
-  <img src="Game_Screenshot/example1_SS.png" alt="initial deal - card distribution" width="310"/>
-  <img src="Game_Screenshot/example2_SS.png" alt="initial deal - player hits" width="310"/>
-  <img src="Game_Screenshot/example3_SS.png" alt="initial deal - dealer's turn" width="310"/>
-</p>
+### requirements
+- python 3.10 or newer  
+- pygame installed  
+  ```bash
+  pip install pygame
