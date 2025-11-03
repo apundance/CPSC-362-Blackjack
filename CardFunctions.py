@@ -11,7 +11,7 @@ def DealCard(Turn):
     if not Deck:
         print("Deck is empty! Reshuffling...")
         cardShuffle()
-    card = random.choice(Deck)
+    card = Deck.pop()
     Turn.append(card)
     Deck.remove(card)
 

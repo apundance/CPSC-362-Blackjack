@@ -15,6 +15,10 @@ def show_rules():
     print("3. Dealer hits until reaching 17 or higher.")
     print("4. Player wins if closer to 21 than dealer without busting.\n")
 
+def hitStay():
+    print("1. Hit")
+    print("2. Stay")
+
 # Start Menu
 print( "==== Welcome to Blackjack ====")
 while True:
@@ -31,52 +35,75 @@ while True:
     else:
         print("Invalid choice, please try again.\n")
 
-# Main game loop
 
+# shuffles up the deck
 CardFunctions.cardShuffle() 
 
-# Set player and dealer 
+# sets the player, dealer hands and the deck
 GameDeck = CardFunctions.Deck
 Player = CardFunctions.playerHand
 Dealer = CardFunctions.dealerHand
 
 while True:
- 
-    # Shuffle when deck is close to empty
+    # clears hands so it doesnt retain cards from the last round
+    CardFunctions.playAgain()
+
+    # deck should never be close to empty but just in case
     if len(GameDeck) < 10:
         print("Deck is running low on cards!")
         CardFunctions.cardShuffle() 
         GameDeck = CardFunctions.Deck
     
-    # Initalize start of game
+    # starts the game
     print("==============================")
     CardFunctions.starting_hands()
-    playerTurn = True
-    DealerTurn = False
     totalPlayer = CardFunctions.Total(Player)
     totalDealer = CardFunctions.Total(Dealer)
 
-    # Print options for player and show result EX: hit, stay, bet,  
+
+    # code for player actions
+    # checks player initial total
+    while True:
+        totalPlayer = CardFunctions.Total(Player)
+        if totalPlayer > 21:
+            print(f"You busted! Total = {totalPlayer}\n")
+            break
+
+        # asks the player if they want to hit or stay
+        hitStay()
+        gamble = input("Hit or stay? ").strip()
+
+        # if 1 then it deals a card and loops, if 2 then it stops
+        if gamble == "1":
+            CardFunctions.DealCard(Player)
+            print(f"Your hand: {Player} (Total: {CardFunctions.Total(Player)})\n")
+            continue
+        elif gamble == "2":
+            break
+        else:
+            print("Invalid input. Use only 1 or 2.\n")
 
 
+    # code for automated dealer actions where it checks if their hand is less than 17 and if it is then it hits
+    totalDealer = CardFunctions.Total(Dealer)
+    while totalDealer < 17:
+        CardFunctions.DealCard(Dealer)
+        totalDealer = CardFunctions.Total(Dealer)
 
-    print(f"Dealer Hand = {Dealer}, dealer total is: {totalDealer}" )
-    print(f"Player Hand = {Player} player total is: {totalPlayer}")
-
-    # Check for winner
-    print("Check For winner")
+    # code to determine the winner
+    print(f"Dealer's hand: {Dealer} (Total: {totalDealer})")
+    print(f"Your hand: {Player} (Total: {CardFunctions.Total(Player)})\n")
     if CardFunctions.DealerWins():
-        print(f"Dealer wins!\nThe dealer has {totalDealer}, player total has {totalPlayer}" )
+        print("Dealer wins!\n")
     else:
-        print(f"You win!\nThe dealer has {totalDealer}, player total has {totalPlayer}" )
+        print("You win!\n")
 
-    # Ask player if they would like to play again
-    playAgain = input("Would you like to continue ? (Y/y = yes, N/n = no) ==> ").lower()
+    # code to ask if the player wants to play again
+    playAgain = input("Would you like to play again? (Y/N): ").lower()
     if playAgain != "y":
         print("Thank you for playing!")
         print("==============================")
         break
-    CardFunctions.playAgain()
 
     
 
