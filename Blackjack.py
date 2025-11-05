@@ -38,7 +38,7 @@ def draw_button(surface, text, rect, base_color, events=None):
                 if rect.collidepoint(e.pos):
                     clicked = True
 
-    # button color stays fixed
+    # Button color stays fixed
     pygame.draw.rect(surface, base_color, rect, border_radius=10)
     draw_text(surface, text, rect.centerx, rect.centery, 36, center=True)
     return clicked
@@ -63,7 +63,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # draw background
+    # Draw background
     screen.fill(GREEN_LIGHT)
 
     # ─────────────── MENU SCREEN ───────────────
@@ -79,7 +79,7 @@ while running:
         if draw_button(screen, "Rules", rules_button, (100,30,30), events):
             state = "rules"
 
-     # ───────────── LOADING ─────────────
+    # ───────────── LOADING ─────────────
     elif state == "loading":
         draw_text(screen, "Shuffling cards...", 0, height//2, 60, GOLD, screen_center=True)
         pygame.display.flip()
@@ -96,23 +96,32 @@ while running:
     
     # ───────────── PLAY ─────────────
     elif state == "play":
-         # initialize game hands only once
+         # Initialize game hands only once
         if not game_started:
             CardFunctions.starting_hands()
             game_started = True
 
-        # draw labels
+        # Draw labels
         draw_text(screen, "Dealer", 0, 80, 40, WHITE, screen_center=True)
         draw_text(screen, "Player", 0, 350, 40, WHITE, screen_center=True)
 
-        # display totals
+        # Display totals
         dealer_total = CardFunctions.Total(CardFunctions.dealerHand)
         player_total = CardFunctions.Total(CardFunctions.playerHand)
-
         draw_text(screen, f"Dealer Total: {dealer_total}", 0, 150, 32, WHITE, screen_center=True)
         draw_text(screen, f"Player Total: {player_total}", 0, 420, 32, WHITE, screen_center=True)
 
-        # temporary buttons
+        hit_button = pygame.Rect(width // 2 - 250, 600, 200, 60)
+        stand_button = pygame.Rect(width // 2 + 50, 600, 200, 60)
+
+        # Play buttons
+        if draw_button(screen, "Hit", hit_button, (30, 100, 30), events):
+            print("Hit clicked!")
+
+        if draw_button(screen, "Stand", stand_button, (100, 30, 30), events):
+            print("Stand clicked!")
+
+
         back_button = pygame.Rect(40, 40, 200, 60)
         if draw_button(screen, "Back", back_button, (30, 100, 30), events):
             state = "menu"
