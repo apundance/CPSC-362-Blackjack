@@ -61,12 +61,15 @@ while True:
         print("Deck is running low on cards!")
         CardFunctions.cardShuffle() 
         GameDeck = CardFunctions.Deck
+
     if balance <= 0:
         print("==============================")
         print("Looks like someone dropped a 100 dollar chip on the floor...")
         balance = 100
         print("==============================")
+
     askBet()
+    
     while True:
         bet = int(input())
         print("==============================")
