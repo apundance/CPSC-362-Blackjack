@@ -48,19 +48,35 @@ def draw_button(surface, text, rect, base_color, events=None):
 # ───────────────────────────────
 # Draw Card 
 # (Visual rectangle cards adapted from partner’s table layout)
-def draw_card(surface, card, x, y, hidden = False):
-    pygame.draw.rect(surface, WHITE, (x, y, 80, 120), border_radius=5)
-    pygame.draw.rect(surface, BLACK, (x, y, 80, 120), 2)
-
-    if hidden: 
-        pygame.draw.rect(surface, BLACK, (x, y, 80, 120), border_radius=5)
-        pygame.draw.rect(surface, GOLD, (x+5, y+5, 70, 110), 3)
+def draw_card(surface, card, x, y, hidden=False):
+    """Draw clean red/white cards (no borders) with real suits."""
+    if hidden:
+        # hidden card = solid red back
+        pygame.draw.rect(surface, (200, 0, 0), (x, y, 80, 120))
         return
-    font = pygame.font.Font("freesansbold.ttf", 28)
+
+    # split value/suit
+    value = card[:-1]
     suit = card[-1]
-    color = RED if suit in ['♥', '♦'] else BLACK
-    text = font.render(str(card), True, color)
-    surface.blit(text, (x + 15, y + 45))
+
+    # plain white face
+    pygame.draw.rect(surface, WHITE, (x, y, 80, 120))
+
+    # red suits (♥♦), black suits (♣♠)
+    color = (200, 0, 0) if suit in ['♥', '♦'] else BLACK
+
+    # fonts
+    font_value = pygame.font.Font("freesansbold.ttf", 28)
+    font_suit = pygame.font.Font("freesansbold.ttf", 32)
+
+    # top-left value
+    val_text = font_value.render(value, True, color)
+    surface.blit(val_text, (x + 8, y + 8))
+
+    # centered suit symbol
+    suit_text = font_suit.render(suit, True, color)
+    rect = suit_text.get_rect(center=(x + 40, y + 60))
+    surface.blit(suit_text, rect)
 
 # Setup pygame
 # ───────────────────────────────
@@ -72,6 +88,11 @@ clock = pygame.time.Clock()
 state = "menu"
 running = True
 msg_color = GOLD
+
+game_started = False
+winner_message = None
+round_over = False
+
 # ───────────────────────────────
 
 # Main loop
@@ -118,6 +139,8 @@ while running:
         if not game_started:
             CardFunctions.starting_hands()
             game_started = True
+            round_over = False
+            winner_message = None
 
         # display titles
         draw_text(screen, "Dealer", 0, 70, 40, WHITE, screen_center=True)
@@ -139,7 +162,11 @@ while running:
             x += 100
 
         # show totals
-        dealer_total = CardFunctions.Total(CardFunctions.dealerHand)
+        if not round_over:
+                dealer_total = "?"    
+        else:
+            dealer_total = CardFunctions.Total(CardFunctions.dealerHand)
+        
         player_total = CardFunctions.Total(CardFunctions.playerHand)
         draw_text(screen, f"Dealer Total: {dealer_total}", 0, 260, 32, WHITE, screen_center=True)
         draw_text(screen, f"Player Total: {player_total}", 0, 550, 32, WHITE, screen_center=True)
@@ -149,12 +176,14 @@ while running:
         stand_button = pygame.Rect(width // 2 + 50, 610, 200, 60)
         back_button = pygame.Rect(40, 40, 160, 50)
 
-        if not winner_message:
+
+        if not round_over: 
             if draw_button(screen, "Hit", hit_button, (30, 100, 30), events):
                 CardFunctions.DealCard(CardFunctions.playerHand)
                 if CardFunctions.Total(CardFunctions.playerHand) > 21:
                     winner_message = "Dealer Wins!"
                     msg_color = RED
+                    round_over = True
 
             if draw_button(screen, "Stand", stand_button, (100, 30, 30), events):
                 while CardFunctions.Total(CardFunctions.dealerHand) < 17:
@@ -165,17 +194,17 @@ while running:
                 else:
                     winner_message = "Player Wins!"
                     msg_color = GOLD
-
-        # show winner
-        if winner_message:
+                round_over = True
+        if round_over:
             draw_text(screen, winner_message, 0, 300, 60, msg_color, screen_center=True)
             again_button = pygame.Rect(width // 2 - 150, 630, 300, 50)
+
             if draw_button(screen, "Play Again", again_button, (30, 100, 30), events):
                 CardFunctions.playAgain()
-                CardFunctions.starting_hands()
+                game_started = False
+                round_over = False
                 winner_message = None
-                msg_color = GOLD
-                game_started = True
+
 
         if draw_button(screen, "Back", back_button, (30, 100, 30), events):
             state = "menu"
