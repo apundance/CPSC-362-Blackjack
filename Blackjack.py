@@ -136,21 +136,22 @@ while running:
     
     # ───────────── PLAY ─────────────
     elif state == "play":
+    # initialize new round once
         if not game_started:
             CardFunctions.starting_hands()
             game_started = True
             round_over = False
             winner_message = None
 
-        # display titles
+        # titles
         draw_text(screen, "Dealer", 0, 70, 40, WHITE, screen_center=True)
         draw_text(screen, "Player", 0, 360, 40, WHITE, screen_center=True)
 
         # draw dealer cards
         x = 200
         for i, card in enumerate(CardFunctions.dealerHand):
-            if i == 1 and not winner_message:
-                draw_card(screen, card, x, 120, hidden=True)  # hide dealer's 2nd card
+            if i == 1 and not round_over:
+                draw_card(screen, card, x, 120, hidden=True)
             else:
                 draw_card(screen, card, x, 120)
             x += 100
@@ -161,14 +162,11 @@ while running:
             draw_card(screen, card, x, 410)
             x += 100
 
-        # show totals
-        if not round_over:
-                dealer_total = "?"    
-        else:
-            dealer_total = CardFunctions.Total(CardFunctions.dealerHand)
-        
+        # totals
+        dealer_total = CardFunctions.Total(CardFunctions.dealerHand)
         player_total = CardFunctions.Total(CardFunctions.playerHand)
-        draw_text(screen, f"Dealer Total: {dealer_total}", 0, 260, 32, WHITE, screen_center=True)
+        dealer_display = "?" if not round_over else dealer_total
+        draw_text(screen, f"Dealer Total: {dealer_display}", 0, 260, 32, WHITE, screen_center=True)
         draw_text(screen, f"Player Total: {player_total}", 0, 550, 32, WHITE, screen_center=True)
 
         # buttons
@@ -176,8 +174,8 @@ while running:
         stand_button = pygame.Rect(width // 2 + 50, 610, 200, 60)
         back_button = pygame.Rect(40, 40, 160, 50)
 
-
-        if not round_over: 
+        # only allow buttons during round
+        if not round_over:
             if draw_button(screen, "Hit", hit_button, (30, 100, 30), events):
                 CardFunctions.DealCard(CardFunctions.playerHand)
                 if CardFunctions.Total(CardFunctions.playerHand) > 21:
@@ -195,21 +193,23 @@ while running:
                     winner_message = "Player Wins!"
                     msg_color = GOLD
                 round_over = True
-        if round_over:
+
+        # if round finished, display message and wait for user click
+        else:
             draw_text(screen, winner_message, 0, 300, 60, msg_color, screen_center=True)
             again_button = pygame.Rect(width // 2 - 150, 630, 300, 50)
-
             if draw_button(screen, "Play Again", again_button, (30, 100, 30), events):
                 CardFunctions.playAgain()
-                game_started = False
+                game_started = False   # reset for next round
                 round_over = False
                 winner_message = None
 
-
+        # menu return
         if draw_button(screen, "Back", back_button, (30, 100, 30), events):
             state = "menu"
             game_started = False
-
+            round_over = False
+            winner_message = None
 
     # ─────────────── RULES SCREEN ───────────────
     elif state == "rules":
