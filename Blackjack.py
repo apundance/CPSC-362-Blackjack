@@ -16,8 +16,15 @@ def show_rules():
     print("4. Player wins if closer to 21 than dealer without busting.\n")
 
 def hitStay():
+    print("==============================")
     print("1. Hit")
     print("2. Stay")
+    print("==============================")
+
+def askBet():
+    print("==============================")
+    print(f"You currently have {balance} dollars")
+    print("How much you betting?")
 
 # Start Menu
 print( "==== Welcome to Blackjack ====")
@@ -35,6 +42,7 @@ while True:
     else:
         print("Invalid choice, please try again.\n")
 
+balance = 100
 
 # shuffles up the deck
 CardFunctions.cardShuffle() 
@@ -53,14 +61,22 @@ while True:
         print("Deck is running low on cards!")
         CardFunctions.cardShuffle() 
         GameDeck = CardFunctions.Deck
-    
+    if balance <= 0:
+        print("==============================")
+        print("Looks like someone dropped a 100 dollar chip on the floor...")
+        balance = 100
+        print("==============================")
+    askBet()
+    while True:
+        bet = int(input())
+        print("==============================")
+        break
     # starts the game
     print("==============================")
     CardFunctions.starting_hands()
     totalPlayer = CardFunctions.Total(Player)
     totalDealer = CardFunctions.Total(Dealer)
-
-
+    
     # code for player actions
     # checks player initial total
     while True:
@@ -95,8 +111,10 @@ while True:
     print(f"Your hand: {Player} (Total: {CardFunctions.Total(Player)})\n")
     if CardFunctions.DealerWins():
         print("Dealer wins!\n")
+        balance -= bet
     else:
         print("You win!\n")
+        balance += bet
 
     # code to ask if the player wants to play again
     playAgain = input("Would you like to play again? (Y/N): ").lower()
