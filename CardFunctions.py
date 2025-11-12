@@ -40,7 +40,10 @@ def Total(Turn):
             total += 10
         elif card == 'A':
             Aces += 1
-    total += Aces * 11
+    if (total + Aces * 11) > 21:
+        total += Aces 
+    else:
+        total += Aces * 11
 
     for _ in range(Aces):
         if total > 21:

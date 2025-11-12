@@ -31,7 +31,7 @@ print( "==== Welcome to Blackjack ====")
 while True:
     start_menu()
     decide = input("Select an option (1-3): ") 
-    if decide == '1':
+    if decide == "1":
         print("Starting game...")
         break
     elif decide == "2":
@@ -69,7 +69,7 @@ while True:
         print("==============================")
 
     askBet()
-    
+
     while True:
         bet = int(input())
         print("==============================")
