@@ -70,11 +70,15 @@ This version includes full card drawing, hidden dealer cards, and hit/stand logi
 ![Start Menu](Game_Screenshot/menu.png)
 
 **Rules Screen:**  
-![Rules Screen](Game_Screenshot/rules.png)
+![Rules Screen](Game_Screenshot/rules.png)  
 
-**Loading Screen:** 
+**Loading Screen:**  
 ![Rules Screen](Game_Screenshot/loading.png)
 
 
-**Gameplay State:**  
-![Gameplay Screen](Game_Screenshot/playstate.png)
+**Gameplay:**  
+
+| | |
+|-|-|
+| ![p1](Game_Screenshot/Round1/playstate1.png) | ![p2](Game_Screenshot/Round1/playstate2.png) |
+| ![p3](Game_Screenshot/Round1/playstate3.png) | ![p4](Game_Screenshot/Round1/playstate4.png) |
