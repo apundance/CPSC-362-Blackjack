@@ -1,54 +1,84 @@
-# CPSC-362-Blackjack
-our blackjack project we're creating for cpsc 362
+# 🃏 Blackjack (Pygame Edition)
+
+A simple blackjack game built in **python** using the **pygame** library.
+This version includes full card drawing, hidden dealer cards, and hit/stand logic
+
+
+## 🎮 Features
+
+### **Main Menu**
+- “Start Game”
+- “Rules” section  
+- Green table background
+
+### **Rules Screen**
+- Simple, readable rules  
+- Back-to-Menu button  
+
+### **Gameplay**
+- Full 52-card deck
+- Clean white/red card graphics  
+- Dealer’s second card is **hidden** until round ends  
+- Player & dealer totals  
+- **Hit** and **Stand** buttons  
+- Dealer draws until total ≥ 17  
+- Automatic win/loss logic  
+- Displays:
+  - **Player Wins!**
+  - **Dealer Wins!**
+- **Play Again** button  
+- Back-to-Menu button  
 
 ---
 
-## project review (10/7/25)
-**goals**
-- implement main game loop  
-- betting / money system  
-- printing results  
-- uml diagrams  
+## 🧩 Planned improvments
+- Betting/chip system
+- Possible custom card images upgrade 
 
 ---
 
-## current tasks
-- main game loop (asking the player if they want to hit)  
-- betting / money system  
-- printing the results  
-- uml diagrams  
+## 🛠️ Requirements
+- python 3.10 or newer  
+- pygame library  
 
----
+## 🕹️ How to run the game
 
-## contributions
+1. make sure your project folder looks like this:
+   CPSC-362-Blackjack/  
+   ├── Blackjack.py  
+   ├── CardFunctions.py  
+   └── cards/
 
-**Tristan**
-- deck of cards  
-- initial state of the game  
-- deal two cards to dealer and player  
-- use case diagram  
-- activity diagram  
+2. open a terminal or command prompt in the folder
 
-**Marvin**
-- use case diagram  
-- activity diagram  
-- readme  
+3. run the game:
+   python Blackjack.py
 
-**Enoch**
-- shuffling the deck of cards  
-- calculating the player’s total and the dealer’s total  
-- use case diagram  
-- activity diagram  
-- readme  
+4. the game will open with:
+   - a green background  
+   - “Welcome to Blackjack” title  
+   - Start Game and Rules buttons  
 
----
-## Examples Screenshots
-<p align="center">
-  <strong>Initial Deal Examples</strong>
-</p>
+   Navigating to the rules screen shows a list of rules and a back button.  
+   Start game will have a back button positioned in the top-left corner.
 
-<p align="center">
-  <img src="Game_Screenshot/example1_SS.png" alt="initial deal - card distribution" width="310"/>
-  <img src="Game_Screenshot/example2_SS.png" alt="initial deal - player hits" width="310"/>
-  <img src="Game_Screenshot/example3_SS.png" alt="initial deal - dealer's turn" width="310"/>
-</p>
+5. close the window or press X to exit.  
+
+## 🖼️ screenshots
+
+**Start Menu:**  
+![Start Menu](Game_Screenshot/menu.png)
+
+**Rules Screen:**  
+![Rules Screen](Game_Screenshot/rules.png)  
+
+**Loading Screen:**  
+![Rules Screen](Game_Screenshot/loading.png)
+
+
+**Gameplay:**  
+
+| | |
+|-|-|
+| ![p1](Game_Screenshot/Round1/playstate1.png) | ![p2](Game_Screenshot/Round1/playstate2.png) |
+| ![p3](Game_Screenshot/Round1/playstate3.png) | ![p4](Game_Screenshot/Round1/playstate4.png) |

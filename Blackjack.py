@@ -1,130 +1,234 @@
+import pygame, sys, os, random
 import CardFunctions
 
-# MENU 
-def start_menu():
-    print("==============================")
-    print("1. Start Game")
-    print("2. Rules")
-    print("3. Exit")
-    print("==============================")
+pygame.init()
 
-def show_rules():
-    print("\n=== Blackjack Rules ===")
-    print("1. Try to get as close to 21 as possible without going over.")
-    print("2. Number cards are worth their number, face cards are 10, Ace is 1 or 11.")
-    print("3. Dealer hits until reaching 17 or higher.")
-    print("4. Player wins if closer to 21 than dealer without busting.\n")
+# Colors
+# ───────────────────────────────
+GREEN_LIGHT = (0, 120, 0)
+WHITE = (255, 255, 255)
+GOLD = (255, 215, 0)
+BLACK = (0, 0, 0)
+RED = (200, 0, 0)
+# ───────────────────────────────
 
-def hitStay():
-    print("==============================")
-    print("1. Hit")
-    print("2. Stay")
-    print("==============================")
+# Draw text
+# ───────────────────────────────
+def draw_text(surface, text, x, y, size=36, color=WHITE, center=False, screen_center=False):
+    font = pygame.font.Font("freesansbold.ttf", size)
+    img = font.render(text, True, color)
+    rect = img.get_rect()
 
-def askBet():
-    print("==============================")
-    print(f"You currently have {balance} dollars")
-    print("How much you betting?")
-
-# Start Menu
-print( "==== Welcome to Blackjack ====")
-while True:
-    start_menu()
-    decide = input("Select an option (1-3): ") 
-    if decide == "1":
-        print("Starting game...")
-        break
-    elif decide == "2":
-            show_rules()
-    elif decide == "3":
-            print("Thanks for playing!")
-            exit()
+    if screen_center:
+        rect.center = (surface.get_width() // 2, y)
+    elif center:
+        rect.center = (x, y)
     else:
-        print("Invalid choice, please try again.\n")
+        rect.topleft = (x, y)
 
-balance = 100
+    surface.blit(img, rect)
+# ───────────────────────────────
 
-# shuffles up the deck
-CardFunctions.cardShuffle() 
+# Draw button 
+# ───────────────────────────────
+def draw_button(surface, text, rect, base_color, events=None):
+    clicked = False
+    if events:
+        for e in events:
+            if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+                if rect.collidepoint(e.pos):
+                    clicked = True
 
-# sets the player, dealer hands and the deck
-GameDeck = CardFunctions.Deck
-Player = CardFunctions.playerHand
-Dealer = CardFunctions.dealerHand
+    # Button color stays fixed
+    pygame.draw.rect(surface, base_color, rect, border_radius=10)
+    draw_text(surface, text, rect.centerx, rect.centery, 36, center=True)
+    return clicked
+# ───────────────────────────────
 
-while True:
-    # clears hands so it doesnt retain cards from the last round
-    CardFunctions.playAgain()
+# ───────────────────────────────
+# Draw Card 
+def draw_card(surface, card, x, y, hidden=False):
 
-    # deck should never be close to empty but just in case
-    if len(GameDeck) < 10:
-        print("Deck is running low on cards!")
-        CardFunctions.cardShuffle() 
-        GameDeck = CardFunctions.Deck
-
-    if balance <= 0:
-        print("==============================")
-        print("Looks like someone dropped a 100 dollar chip on the floor...")
-        balance = 100
-        print("==============================")
-
-    askBet()
-
-    while True:
-        bet = int(input())
-        print("==============================")
-        break
-    # starts the game
-    print("==============================")
-    CardFunctions.starting_hands()
-    totalPlayer = CardFunctions.Total(Player)
-    totalDealer = CardFunctions.Total(Dealer)
+    if hidden:
+        pygame.draw.rect(surface, (200,0,0), (x, y, 80, 120))
+        pygame.draw.rect(surface, WHITE, (x, y, 80, 120), 2)
+        return
     
-    # code for player actions
-    # checks player initial total
-    while True:
-        totalPlayer = CardFunctions.Total(Player)
-        if totalPlayer > 21:
-            print(f"You busted! Total = {totalPlayer}\n")
-            break
+    suit = card[-1]
+    color = RED if suit in ['♥','♦'] else BLACK
 
-        # asks the player if they want to hit or stay
-        hitStay()
-        gamble = input("Hit or stay? ").strip()
+    # white card
+    pygame.draw.rect(surface, WHITE, (x, y, 80, 120))
+    pygame.draw.rect(surface, BLACK, (x, y, 80, 120), 2)
 
-        # if 1 then it deals a card and loops, if 2 then it stops
-        if gamble == "1":
-            CardFunctions.DealCard(Player)
-            print(f"Your hand: {Player} (Total: {CardFunctions.Total(Player)})\n")
-            continue
-        elif gamble == "2":
-            break
+    # font style 
+    font = pygame.font.SysFont("arial", 32)
+
+    # render whole card string (A♥, 10♠, Q♦, etc.)
+    text = font.render(card, True, color)
+
+    # center the card text inside the rectangle
+    rect = text.get_rect(center=(x + 40, y + 60))
+    surface.blit(text, rect)
+
+# Setup pygame
+# ───────────────────────────────
+width, height = 1000, 700
+screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+pygame.display.set_caption("BlackjackTesting")
+clock = pygame.time.Clock()
+
+state = "menu"
+running = True
+msg_color = GOLD
+
+game_started = False
+winner_message = None
+round_over = False
+
+# ───────────────────────────────
+
+# Main loop
+# ───────────────────────────────
+while running:
+    events = pygame.event.get()
+    for event in events:
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Draw background
+    screen.fill(GREEN_LIGHT)
+
+    # ─────────────── MENU SCREEN ───────────────
+    if state == "menu":
+        draw_text(screen, "Welcome to Blackjack", 0, 100, 60, GOLD, screen_center=True)
+
+        start_button = pygame.Rect(width // 2 - 120, 400, 240, 70)
+        rules_button = pygame.Rect(width // 2 - 120, 500, 240, 70)
+
+        if draw_button(screen, "Start Game", start_button, (30,100,30), events):
+            state = "loading"
+
+        if draw_button(screen, "Rules", rules_button, (100,30,30), events):
+            state = "rules"
+
+    # ───────────── LOADING ─────────────
+    elif state == "loading":
+        draw_text(screen, "Shuffling cards...", 0, height//2, 60, GOLD, screen_center=True)
+        pygame.display.flip()
+        pygame.time.delay(1000)
+
+        # Prepare new game
+        CardFunctions.reshuffle()
+        CardFunctions.playAgain()
+
+        game_started = False
+        winner_message = None
+        state = "play"
+
+    
+    # ───────────── PLAY ─────────────
+    elif state == "play":
+    # initialize new round once
+        if not game_started:
+            CardFunctions.starting_hands()
+            game_started = True
+            round_over = False
+            winner_message = None
+
+        # titles
+        draw_text(screen, "Dealer", 0, 70, 40, WHITE, screen_center=True)
+        draw_text(screen, "Player", 0, 360, 40, WHITE, screen_center=True)
+
+        # draw dealer cards
+        x = 200
+        for i, card in enumerate(CardFunctions.dealerHand):
+            if i == 1 and not round_over:
+                draw_card(screen, card, x, 120, hidden=True)
+            else:
+                draw_card(screen, card, x, 120)
+            x += 100
+
+        # draw player cards
+        x = 200
+        for card in CardFunctions.playerHand:
+            draw_card(screen, card, x, 410)
+            x += 100
+
+        # totals
+        dealer_total = CardFunctions.Total(CardFunctions.dealerHand)
+        player_total = CardFunctions.Total(CardFunctions.playerHand)
+        dealer_display = "?" if not round_over else dealer_total
+        draw_text(screen, f"Dealer Total: {dealer_display}", 0, 260, 32, WHITE, screen_center=True)
+        draw_text(screen, f"Player Total: {player_total}", 0, 550, 32, WHITE, screen_center=True)
+
+        # buttons
+        hit_button = pygame.Rect(width // 2 - 250, 610, 200, 60)
+        stand_button = pygame.Rect(width // 2 + 50, 610, 200, 60)
+        back_button = pygame.Rect(40, 40, 160, 50)
+
+        # only allow buttons during round
+        if not round_over:
+            if draw_button(screen, "Hit", hit_button, (30, 100, 30), events):
+                CardFunctions.DealCard(CardFunctions.playerHand)
+                if CardFunctions.Total(CardFunctions.playerHand) > 21:
+                    winner_message = "Dealer Wins!"
+                    msg_color = RED
+                    round_over = True
+
+            if draw_button(screen, "Stand", stand_button, (100, 30, 30), events):
+                while CardFunctions.Total(CardFunctions.dealerHand) < 17:
+                    CardFunctions.DealCard(CardFunctions.dealerHand)
+                if CardFunctions.DealerWins():
+                    winner_message = "Dealer Wins!"
+                    msg_color = RED
+                else:
+                    winner_message = "Player Wins!"
+                    msg_color = GOLD
+                round_over = True
+
+        # if round finished, display message and wait for user click
         else:
-            print("Invalid input. Use only 1 or 2.\n")
+            draw_text(screen, winner_message, 0, 300, 60, msg_color, screen_center=True)
+            again_button = pygame.Rect(width // 2 - 150, 630, 300, 50)
+            if draw_button(screen, "Play Again", again_button, (30, 100, 30), events):
+                CardFunctions.playAgain()
+                game_started = False   # reset for next round
+                round_over = False
+                winner_message = None
+
+        # menu return
+        if draw_button(screen, "Back", back_button, (30, 100, 30), events):
+            state = "menu"
+            game_started = False
+            round_over = False
+            winner_message = None
+
+    # ─────────────── RULES SCREEN ───────────────
+    elif state == "rules":
+        draw_text(screen, "Blackjack Rules", 0, 80, 60, GOLD, screen_center=True)
+
+        rules = [
+                    "1. Try to get as close to 21 as possible without going over.",
+                    "2. Number cards are worth their face value.",
+                    "3. Face cards are worth 10, Aces are 1 or 11.",
+                    "4. Dealer hits until reaching 17 or higher.",
+                    "5. You win if closer to 21 than dealer without busting."
+                ]
+        
+        y = 250
+        for line in rules:
+            draw_text(screen, line, 0, y, 32, WHITE, screen_center=True)
+            y += 50
+
+        back_button = pygame.Rect(width // 2 - 120, 600, 240, 60)
+        if draw_button(screen, "Back to Menu", back_button, (30,100,30), events):
+            state = "menu"
 
 
-    # code for automated dealer actions where it checks if their hand is less than 17 and if it is then it hits
-    totalDealer = CardFunctions.Total(Dealer)
-    while totalDealer < 17:
-        CardFunctions.DealCard(Dealer)
-        totalDealer = CardFunctions.Total(Dealer)
 
-    # code to determine the winner
-    print(f"Dealer's hand: {Dealer} (Total: {totalDealer})")
-    print(f"Your hand: {Player} (Total: {CardFunctions.Total(Player)})\n")
-    if CardFunctions.DealerWins():
-        print("Dealer wins!\n")
-        balance -= bet
-    else:
-        print("You win!\n")
-        balance += bet
+    pygame.display.flip()
+    clock.tick(60)
 
-    # code to ask if the player wants to play again
-    playAgain = input("Would you like to play again? (Y/N): ").lower()
-    if playAgain != "y":
-        print("Thank you for playing!")
-        print("==============================")
-        break
-
-    
-
+pygame.quit()
+sys.exit()
