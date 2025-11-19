@@ -78,7 +78,11 @@ This version includes full card drawing, hidden dealer cards, and hit/stand logi
 
 **Gameplay:**  
 
-| | |
+|Game 1 | |
 |-|-|
 | ![p1](Game_Screenshot/Round1/playstate1.png) | ![p2](Game_Screenshot/Round1/playstate2.png) |
-| ![p3](Game_Screenshot/Round1/playstate3.png) | ![p4](Game_Screenshot/Round1/playstate4.png) |
+
+|Game 2 | |
+|-|-|
+| ![p1](Game_Screenshot/Round2/playstate1.png) | ![p2](Game_Screenshot/Round2/playstate2.png) |
+| ![p3](Game_Screenshot/Round2/playstate3.png) | ![p4](Game_Screenshot/Round2/playstate4.png) |
