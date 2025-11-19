@@ -47,36 +47,29 @@ def draw_button(surface, text, rect, base_color, events=None):
 
 # ───────────────────────────────
 # Draw Card 
-# (Visual rectangle cards adapted from partner’s table layout)
 def draw_card(surface, card, x, y, hidden=False):
-    """Draw clean red/white cards (no borders) with real suits."""
+
     if hidden:
-        # hidden card = solid red back
-        pygame.draw.rect(surface, (200, 0, 0), (x, y, 80, 120))
+        pygame.draw.rect(surface, (200,0,0), (x, y, 80, 120))
+        pygame.draw.rect(surface, WHITE, (x, y, 80, 120), 2)
         return
-
-    # split value/suit
-    value = card[:-1]
+    
     suit = card[-1]
+    color = RED if suit in ['♥','♦'] else BLACK
 
-    # plain white face
+    # white card
     pygame.draw.rect(surface, WHITE, (x, y, 80, 120))
+    pygame.draw.rect(surface, BLACK, (x, y, 80, 120), 2)
 
-    # red suits (♥♦), black suits (♣♠)
-    color = (200, 0, 0) if suit in ['♥', '♦'] else BLACK
+    # font style 
+    font = pygame.font.SysFont("arial", 32)
 
-    # fonts
-    font_value = pygame.font.Font("freesansbold.ttf", 28)
-    font_suit = pygame.font.Font("freesansbold.ttf", 32)
+    # render whole card string (A♥, 10♠, Q♦, etc.)
+    text = font.render(card, True, color)
 
-    # top-left value
-    val_text = font_value.render(value, True, color)
-    surface.blit(val_text, (x + 8, y + 8))
-
-    # centered suit symbol
-    suit_text = font_suit.render(suit, True, color)
-    rect = suit_text.get_rect(center=(x + 40, y + 60))
-    surface.blit(suit_text, rect)
+    # center the card text inside the rectangle
+    rect = text.get_rect(center=(x + 40, y + 60))
+    surface.blit(text, rect)
 
 # Setup pygame
 # ───────────────────────────────
