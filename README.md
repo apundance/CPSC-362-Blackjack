@@ -1,23 +1,39 @@
 # 🃏 Blackjack (Pygame Edition)
 
 A simple blackjack game built in **python** using the **pygame** library.
-This project recreates the classic casino card game with a graphical interface and serves as a foundation for future gameplay development.
+This version includes full card drawing, hidden dealer cards, and hit/stand logic
 
-## 🎮 Current features
-- start menu with **"Start Game"** and **"Rules"** buttons  
-- **rules screen** with readable text and a movable **back button**  
-- basic **state transitions** (`menu → loading → play → rules`)  
-- green background with gold title text  
-- simple, responsive UI design 
+
+## 🎮 Features
+
+### **Main Menu**
+- “Start Game”
+- “Rules” section  
+- Green table background
+
+### **Rules Screen**
+- Simple, readable rules  
+- Back-to-Menu button  
+
+### **Gameplay**
+- Full 52-card deck
+- Clean white/red card graphics  
+- Dealer’s second card is **hidden** until round ends  
+- Player & dealer totals  
+- **Hit** and **Stand** buttons  
+- Dealer draws until total ≥ 17  
+- Automatic win/loss logic  
+- Displays:
+  - **Player Wins!**
+  - **Dealer Wins!**
+- **Play Again** button  
+- Back-to-Menu button  
 
 ---
 
-## 🧩 Planned features
-- display player and dealer cards  
-- add **Hit** and **Stand** buttons for player actions  
-- implement dealer logic and win/loss conditions  
-- show results screen (You Win / Dealer Wins)  
-- add sound effects and animations  
+## 🧩 Planned improvments
+- Betting/chip system
+- Possible custom card images upgrade 
 
 ---
 
