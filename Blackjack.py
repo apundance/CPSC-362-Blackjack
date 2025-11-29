@@ -85,7 +85,8 @@ msg_color = GOLD
 game_started = False
 winner_message = None
 round_over = False
-
+balance = 100
+bet = 0
 # ───────────────────────────────
 
 # Main loop
@@ -124,9 +125,96 @@ while running:
 
         game_started = False
         winner_message = None
-        state = "play"
+        state = "betting"
 
-    
+
+   # Assuming screen, fonts, etc. are already initialized
+
+# Betting state logic
+    elif state == "betting":
+        screen.fill(GREEN_LIGHT)  # Fill screen with background color
+        
+        # Titles and instructions
+        draw_text(screen, "Place Your Bet", 0, 100, 60, GOLD, screen_center=True)
+        draw_text(screen, f"Your Balance: ${bet}", 0, 180, 40, WHITE, screen_center=True)
+        draw_text(screen, "Enter amount:", 0, 260, 40, WHITE, screen_center=True)
+
+        # Input box for the bet
+        input_box = pygame.Rect(width // 2 - 100, 330, 200, 40)  # Define input box dimensions
+        active = False  # Initially, the input box is inactive
+        text = ''  # The text that the user inputs
+        color_inactive = pygame.Color(255, 255, 255)  # Inactive color (white)
+        color_active = pygame.Color(200, 200, 200)  # Active color (light grey)
+        color = color_inactive  # Set the initial input box color
+        error_message = None  # Placeholder for error message
+
+        # Event loop for handling user input
+        for event in events:
+            if event.type == pygame.QUIT:
+                running = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # Check if the user clicked inside the input box
+                if input_box.collidepoint(event.pos):
+                    active = True
+                    color = color_active  # Change color to active
+                else:
+                    active = False
+                    color = color_inactive  # Change color to inactive
+
+            if event.type == pygame.KEYDOWN:
+                if active:
+                    if event.key == pygame.K_RETURN:
+                        # Handle the enter key (confirm the bet)
+                        try:
+                            bet_amount = int(text)  # Try to convert text to an integer
+                            if bet_amount > 0 and bet_amount <= bet:  # Bet must be positive and within balance
+                                balance = bet_amount  # Update bet amount
+                                state = "play"  # Transition to play state
+                            else:
+                                error_message = f"Invalid bet. Max bet: ${bet}"  # Error message if invalid bet
+                        except ValueError:
+                            error_message = "Please enter a valid number."  # Error if input is not a number
+                    elif event.key == pygame.K_BACKSPACE:
+                        # Remove the last character from the input text
+                        text = text[:-1]
+                    else:
+                        # Add the typed character to the text string
+                        if len(text) < 6:  # Optional limit to 6 characters
+                            text += event.unicode
+
+        # Render the input box (active or inactive)
+        pygame.draw.rect(screen, color, input_box)
+
+        # Render the text inside the input box
+        font = pygame.font.SysFont("arial", 32)  # Font for text rendering
+        txt_surface = font.render(text, True, (0, 0, 0))  # Black text for the input
+        screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Draw text inside the box
+
+        # Draw the input box border
+        pygame.draw.rect(screen, (255, 255, 255), input_box, 2)  # White border for the input box
+
+        # Display error message if any
+        if error_message:
+            error_text = font.render(error_message, True, (255, 0, 0))  # Red error text
+            screen.blit(error_text, (width // 2 - error_text.get_width() // 2, 450))  # Centered error message
+
+        # Render the "Confirm Bet" button
+        confirm_button = pygame.Rect(width // 2 - 120, 500, 240, 70)
+        if draw_button(screen, "Confirm Bet", confirm_button, (30, 100, 30), events):
+            if not error_message:  # Only confirm the bet if there's no error
+                print(f"Bet Confirmed: ${bet}")
+                state = "play"  # Transition to the play state
+
+        # Render the "Back to Menu" button
+        back_button = pygame.Rect(40, 40, 160, 50)
+        if draw_button(screen, "Back to Menu", back_button, (100, 30, 30), events):
+            state = "menu"
+            balance = 100  # Reset the bet back to the initial value
+            error_message = None  # Clear any error message
+
+
+
     # ───────────── PLAY ─────────────
     elif state == "play":
     # initialize new round once
@@ -182,9 +270,11 @@ while running:
                 if CardFunctions.DealerWins():
                     winner_message = "Dealer Wins!"
                     msg_color = RED
+                    balance -= bet
                 else:
                     winner_message = "Player Wins!"
                     msg_color = GOLD
+                    balance += (2 * bet)
                 round_over = True
 
         # if round finished, display message and wait for user click
