@@ -143,7 +143,7 @@ while running:
         
         # Titles and instructions
         draw_text(screen, "Place Your Bet", 0, 100, 60, GOLD, screen_center=True)
-        draw_text(screen, f"Your Balance: ${bet}", 0, 180, 40, WHITE, screen_center=True)
+        draw_text(screen, f"Your Balance: ${balance}", 0, 180, 40, WHITE, screen_center=True)
         draw_text(screen, "Enter amount:", 0, 260, 40, WHITE, screen_center=True)
 
         # Event loop for handling user input
@@ -165,19 +165,18 @@ while running:
                     # Handle the enter key (confirm the bet)
                     try:
                         bet_amount = int(text)  # Try to convert text to an integer
-                        
-                        if bet_amount <= 0:
-                             error_message = "Bet must be greater than 0."
-                        elif bet_amount > balance:
-                            error_message = f"Invalid bet. Max bet: ${bet}"  # Error message if invalid bet
-                        
-                        else: 
+                    
+                        if bet_amount > 0 and bet_amount < balance: 
                             bet = bet_amount
                             balance -= bet
                             text = ""
                             error_message = None
                             state = "play"
-                    
+                        if bet_amount <= 0:
+                             error_message = "Bet must be greater than 0."
+                        else:
+                            error_message = f"Invalid bet. Max bet: ${balance}"  # Error message if invalid bet
+                        
                     except ValueError:
                         error_message = "Please enter a valid number."  # Error if input is not a number
                 
@@ -223,7 +222,7 @@ while running:
 
         # Render the "Back to Menu" button
         back_button = pygame.Rect(40, 40, 160, 50)
-        if draw_button(screen, "Back to Menu", back_button, (100, 30, 30), events):
+        if draw_button(screen, "Menu", back_button, (100, 30, 30), events):
             state = "menu"
             balance = 100  # Reset the bet back to the initial value
             bet = 0
