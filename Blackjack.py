@@ -166,7 +166,7 @@ while running:
                     try:
                         bet_amount = int(text)  # Try to convert text to an integer
                     
-                        if bet_amount > 0 and bet_amount < balance: 
+                        if bet_amount > 0 and bet_amount <= balance: 
                             bet = bet_amount
                             balance -= bet
                             text = ""
@@ -230,7 +230,6 @@ while running:
             error_message = None  # Clear any error message
 
 
-
     # ───────────── PLAY ─────────────
     elif state == "play":
     # initialize new round once
@@ -243,6 +242,10 @@ while running:
         # titles
         draw_text(screen, "Dealer", 0, 70, 40, WHITE, screen_center=True)
         draw_text(screen, "Player", 0, 360, 40, WHITE, screen_center=True)
+
+        # money balance
+        draw_text(screen, f"Balance: ${balance}", (width / 1.7 ), 20, 32, WHITE, center=False)
+
 
         # draw dealer cards
         x = 200
@@ -284,13 +287,13 @@ while running:
                 while CardFunctions.Total(CardFunctions.dealerHand) < 17:
                     CardFunctions.DealCard(CardFunctions.dealerHand)
                 if CardFunctions.DealerWins():
-                    winner_message = "Dealer Wins!"
+                    winner_message = f"Dealer Wins! -{bet}"
                     msg_color = RED
                     balance -= bet
                 else:
-                    winner_message = "Player Wins!"
+                    winner_message = f"Player Wins! +{bet}"
                     msg_color = GOLD
-                    balance += (2 * bet)
+                    balance += bet * 2
                 round_over = True
 
         # if round finished, display message and wait for user click
@@ -302,6 +305,8 @@ while running:
                 game_started = False   # reset for next round
                 round_over = False
                 winner_message = None
+                bet = 0
+                state = "betting"
 
         # menu return
         if draw_button(screen, "Menu", back_button, (30, 100, 30), events):
