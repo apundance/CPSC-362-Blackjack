@@ -160,55 +160,74 @@ while running:
                     active = False
                     color = color_inactive  # Change color to inactive
 
-            if event.type == pygame.KEYDOWN:
-                if active:
-                    if event.key == pygame.K_RETURN:
-                        # Handle the enter key (confirm the bet)
-                        try:
-                            bet_amount = int(text)  # Try to convert text to an integer
-                            if bet_amount > 0 and bet_amount <= bet:  # Bet must be positive and within balance
-                                balance = bet_amount  # Update bet amount
-                                state = "play"  # Transition to play state
-                            else:
-                                error_message = f"Invalid bet. Max bet: ${bet}"  # Error message if invalid bet
-                        except ValueError:
-                            error_message = "Please enter a valid number."  # Error if input is not a number
-                    elif event.key == pygame.K_BACKSPACE:
-                        # Remove the last character from the input text
-                        text = text[:-1]
-                    else:
-                        # Add the typed character to the text string
-                        if len(text) < 6:  # Optional limit to 6 characters
-                            text += event.unicode
+            if event.type == pygame.KEYDOWN and active:
+                if event.key == pygame.K_RETURN:
+                    # Handle the enter key (confirm the bet)
+                    try:
+                        bet_amount = int(text)  # Try to convert text to an integer
+                        
+                        if bet_amount <= 0:
+                             error_message = "Bet must be greater than 0."
+                        elif bet_amount > balance:
+                            error_message = f"Invalid bet. Max bet: ${bet}"  # Error message if invalid bet
+                        
+                        else: 
+                            bet = bet_amount
+                            balance -= bet
+                            text = ""
+                            error_message = None
+                            state = "play"
+                    
+                    except ValueError:
+                        error_message = "Please enter a valid number."  # Error if input is not a number
+                
+                elif event.key == pygame.K_BACKSPACE:
+                    # Remove the last character from the input text
+                    text = text[:-1]
+                else:
+                    # Add the typed character to the text string
+                    if len(text) < 6:  # Optional limit to 6 characters
+                       text += event.unicode
 
         # Render the input box (active or inactive)
         pygame.draw.rect(screen, color, input_box)
 
         # Render the text inside the input box
         font = pygame.font.SysFont("arial", 32)  # Font for text rendering
-        txt_surface = font.render(text, True, (0, 0, 0))  # Black text for the input
+        txt_surface = font.render(text, True, BLACK)  # Black text for the input
         screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))  # Draw text inside the box
 
         # Draw the input box border
-        pygame.draw.rect(screen, (255, 255, 255), input_box, 2)  # White border for the input box
+        pygame.draw.rect(screen, WHITE, input_box, 2)  # White border for the input box
 
         # Display error message if any
         if error_message:
-            error_text = font.render(error_message, True, (255, 0, 0))  # Red error text
+            error_text = font.render(error_message, True, RED)  # Red error text
             screen.blit(error_text, (width // 2 - error_text.get_width() // 2, 450))  # Centered error message
 
         # Render the "Confirm Bet" button
         confirm_button = pygame.Rect(width // 2 - 120, 500, 240, 70)
         if draw_button(screen, "Confirm Bet", confirm_button, (30, 100, 30), events):
-            if not error_message:  # Only confirm the bet if there's no error
-                print(f"Bet Confirmed: ${bet}")
-                state = "play"  # Transition to the play state
+            try:
+                bet_amount = int(text)
+                if bet_amount > 0 and bet_amount <= balance:
+                    bet = bet_amount
+                    balance -= bet
+                    text = ""
+                    error_message = None
+                    state = "play"
+                else:
+                    error_message = f"Invalid bet. Max: ${balance}"
+            except:
+                error_message = "Enter a valid number."
 
         # Render the "Back to Menu" button
         back_button = pygame.Rect(40, 40, 160, 50)
         if draw_button(screen, "Back to Menu", back_button, (100, 30, 30), events):
             state = "menu"
             balance = 100  # Reset the bet back to the initial value
+            bet = 0
+            text = ""
             error_message = None  # Clear any error message
 
 
