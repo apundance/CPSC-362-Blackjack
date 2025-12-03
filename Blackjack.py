@@ -85,8 +85,18 @@ msg_color = GOLD
 game_started = False
 winner_message = None
 round_over = False
+
+# Setup Bet
 balance = 100
 bet = 0
+input_box = pygame.Rect(width // 2 - 100, 330, 200, 40)  # Define input box dimensions
+active = False  # Initially, the input box is inactive
+text = ''  # The text that the user inputs
+color_inactive = pygame.Color(255, 255, 255)  # Inactive color (white)
+color_active = pygame.Color(200, 200, 200)  # Active color (light grey)
+color = color_inactive  # Set the initial input box color
+error_message = None  # Placeholder for error message
+
 # ───────────────────────────────
 
 # Main loop
@@ -127,10 +137,7 @@ while running:
         winner_message = None
         state = "betting"
 
-
-   # Assuming screen, fonts, etc. are already initialized
-
-# Betting state logic
+    # ───────────── BETTING ─────────────
     elif state == "betting":
         screen.fill(GREEN_LIGHT)  # Fill screen with background color
         
@@ -138,15 +145,6 @@ while running:
         draw_text(screen, "Place Your Bet", 0, 100, 60, GOLD, screen_center=True)
         draw_text(screen, f"Your Balance: ${bet}", 0, 180, 40, WHITE, screen_center=True)
         draw_text(screen, "Enter amount:", 0, 260, 40, WHITE, screen_center=True)
-
-        # Input box for the bet
-        input_box = pygame.Rect(width // 2 - 100, 330, 200, 40)  # Define input box dimensions
-        active = False  # Initially, the input box is inactive
-        text = ''  # The text that the user inputs
-        color_inactive = pygame.Color(255, 255, 255)  # Inactive color (white)
-        color_active = pygame.Color(200, 200, 200)  # Active color (light grey)
-        color = color_inactive  # Set the initial input box color
-        error_message = None  # Placeholder for error message
 
         # Event loop for handling user input
         for event in events:
@@ -288,7 +286,7 @@ while running:
                 winner_message = None
 
         # menu return
-        if draw_button(screen, "Back", back_button, (30, 100, 30), events):
+        if draw_button(screen, "Menu", back_button, (30, 100, 30), events):
             state = "menu"
             game_started = False
             round_over = False
