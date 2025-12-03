@@ -54,12 +54,19 @@ def starting_hands():
         DealCard(playerHand)
         DealCard(dealerHand)
 
-# Dealer logic: check who wins
-def DealerWins():
+# Round results logic: 1 = dealer wins, 0 = player wins, -1 = tie
+def round_results():
     p = Total(playerHand)
     d = Total(dealerHand)
     if p > 21:
-        return True      # player bust
+        return 1     # player bust
     if d > 21:
-        return False     # dealer bust
-    return d >= p
+        return 0    # dealer bust
+    if d > p:
+        return 1
+    elif d < p: 
+        return 0
+    else:
+        return -1
+    
+    

@@ -303,6 +303,7 @@ while running:
                 CardFunctions.DealCard(CardFunctions.playerHand)
                 if CardFunctions.Total(CardFunctions.playerHand) > 21:
                     winner_message = "Dealer Wins!"
+                    balance -= bet * 2
                     msg_color = RED
                     round_over = True
 
@@ -310,14 +311,18 @@ while running:
                 while CardFunctions.Total(CardFunctions.dealerHand) < 17:
                     CardFunctions.DealCard(CardFunctions.dealerHand)
                 
-                if CardFunctions.DealerWins():
+                result = CardFunctions.round_results()
+                if result == 1:
                     winner_message = f"Dealer Wins! -{bet}"
                     msg_color = RED
                     balance -= bet
-                else:
+                elif result == 0:
                     winner_message = f"Player Wins! +{bet}"
                     msg_color = GOLD
                     balance += bet * 2
+                else:
+                    winner_message = "Push! (Tie)"
+                    msg_color = WHITE
                     
                 round_over = True
 
