@@ -228,6 +228,29 @@ while running:
             bet = 0
             text = ""
             error_message = None  # Clear any error message
+    
+    #───────────── NO MONEY ─────────────
+    elif state == "lost":
+        screen.fill(GREEN_LIGHT)
+
+        draw_text(screen, "You're all Out of Money!", 0, 120, 60, RED, screen_center=True)
+        draw_text(screen, "Oh look you found $100 on the floor", 0, 220, 40, WHITE, screen_center=True)
+        draw_text(screen, "Are you sure you want to Try again!?", 0, 300, 40, GOLD, screen_center=True)
+
+        
+        back_button = pygame.Rect(width // 2 - 150, 500, 300, 70)
+
+        if draw_button(screen, "Play Again", again_button, (30, 100, 30), events):
+                balance = 100
+                state = "betting"
+
+        if draw_button(screen, "Return to Menu", back_button, (30, 100, 30), events):
+            balance = 100       # donation refill
+            bet = 0
+            text = ""
+            error_message = None
+            state = "menu"
+        
 
 
     # ───────────── PLAY ─────────────
@@ -286,6 +309,7 @@ while running:
             if draw_button(screen, "Stand", stand_button, (100, 30, 30), events):
                 while CardFunctions.Total(CardFunctions.dealerHand) < 17:
                     CardFunctions.DealCard(CardFunctions.dealerHand)
+                
                 if CardFunctions.DealerWins():
                     winner_message = f"Dealer Wins! -{bet}"
                     msg_color = RED
@@ -294,6 +318,7 @@ while running:
                     winner_message = f"Player Wins! +{bet}"
                     msg_color = GOLD
                     balance += bet * 2
+                    
                 round_over = True
 
         # if round finished, display message and wait for user click
@@ -306,7 +331,10 @@ while running:
                 round_over = False
                 winner_message = None
                 bet = 0
-                state = "betting"
+                if balance <= 0:
+                    state = "lost"
+                else:
+                    state = "betting"
 
         # menu return
         if draw_button(screen, "Menu", back_button, (30, 100, 30), events):
