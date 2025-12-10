@@ -1,7 +1,7 @@
 # 🃏 Blackjack (Pygame Edition)
 
 A simple blackjack game built in **python** using the **pygame** library.
-This version includes full card drawing, hidden dealer cards, and hit/stand logic
+This version includes betting, full card drawing, hidden dealer cards, and hit/stand logic
 
 
 ## 🎮 Features
@@ -15,7 +15,12 @@ This version includes full card drawing, hidden dealer cards, and hit/stand logi
 - Simple, readable rules  
 - Back-to-Menu button  
 
+### Betting
+- Users can set how much to money to bet
+- A win shows how much won
+
 ### **Gameplay**
+
 - Full 52-card deck
 - Clean white/red card graphics  
 - Dealer’s second card is **hidden** until round ends  
@@ -31,19 +36,13 @@ This version includes full card drawing, hidden dealer cards, and hit/stand logi
 
 ---
 
-## 🧩 Planned improvments
-- Betting/chip system
-- Possible custom card images upgrade 
-
----
-
 ## 🛠️ Requirements
 - python 3.10 or newer  
 - pygame library  
 
 ## 🕹️ How to run the game
 
-1. make sure your project folder looks like this:
+1. Project folder should looks like this:
    CPSC-362-Blackjack/  
    ├── Blackjack.py  
    ├── CardFunctions.py  
@@ -59,9 +58,6 @@ This version includes full card drawing, hidden dealer cards, and hit/stand logi
    - “Welcome to Blackjack” title  
    - Start Game and Rules buttons  
 
-   Navigating to the rules screen shows a list of rules and a back button.  
-   Start game will have a back button positioned in the top-left corner.
-
 5. close the window or press X to exit.  
 
 ## 🖼️ screenshots
@@ -73,16 +69,17 @@ This version includes full card drawing, hidden dealer cards, and hit/stand logi
 ![Rules Screen](Game_Screenshot/rules.png)  
 
 **Loading Screen:**  
-![Rules Screen](Game_Screenshot/loading.png)
+![Loading Screen](Game_Screenshot/loading.png)
 
+**Betting Screen:**  
+![Bet Screen](Game_Screenshot/bet.png)
+
+**No money Screen:**  
+![No money Screen](Game_Screenshot/noMoney.png)
 
 **Gameplay:**  
 
 |Game 1 | |
 |-|-|
 | ![p1](Game_Screenshot/Round1/playstate1.png) | ![p2](Game_Screenshot/Round1/playstate2.png) |
-
-|Game 2 | |
-|-|-|
-| ![p1](Game_Screenshot/Round2/playstate1.png) | ![p2](Game_Screenshot/Round2/playstate2.png) |
-| ![p3](Game_Screenshot/Round2/playstate3.png) | ![p4](Game_Screenshot/Round2/playstate4.png) |
+| ![p3](Game_Screenshot/Round1/playstate3.png) |
