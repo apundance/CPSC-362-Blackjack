@@ -302,8 +302,7 @@ while running:
             if draw_button(screen, "Hit", hit_button, (30, 100, 30), events):
                 CardFunctions.DealCard(CardFunctions.playerHand)
                 if CardFunctions.Total(CardFunctions.playerHand) > 21:
-                    winner_message = "Dealer Wins!"
-                    balance -= bet * 2
+                    winner_message = f"Dealer Wins!-{bet}"
                     msg_color = RED
                     round_over = True
 
@@ -315,7 +314,6 @@ while running:
                 if result == 1:
                     winner_message = f"Dealer Wins! -{bet}"
                     msg_color = RED
-                    balance -= bet
                 elif result == 0:
                     winner_message = f"Player Wins! +{bet}"
                     msg_color = GOLD
